@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Movie Form";
+}
+
+@model DateMe_Mission4.Models.Movies
+
+<h1>Movies Form</h1>
+
+<form method="post" class="form-group" onsubmit="Calculate()">
+    <label class="col-form-label" asp-for="MovieID">MovieID:</label>
+    <input id="movieid" asp-for="MovieID">
+    <br>
+
+    <label class="col-form-label" asp-for="Category">Category:</label>
+    <input id="category" asp-for="Category">
+    <br>
+
+    <label class="col-form-label" asp-for="Title">Title:</label>
+    <input id="title" asp-for="Title">
+    <br>
+
+    <label class="col-form-label" asp-for="Year">Year:</label>
+    <input id="year" asp-for="Year">
+    <br>
+
+    <label class="col-form-label" asp-for="Rating">Rating:</label>
+    <input id="rating" asp-for="Rating">
+    <br>
+
+    <label class="col-form-label" asp-for="Edited">Edited:</label>
+    <select id="edited" asp-for="Edited">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+    <br>
+
+    <label class="col-form-label">Lent to:</label>
+    <input id="lentto" asp-for="Lent_to"><br>
+
+    <label class="col-form-label">Notes:</label>
+    <textarea id="notes" asp-for="Notes"></textarea>
+    <br>
+
+    <input class="btn-outline-primary" type="submit" id="btnSend" value="Submit">
+
+    <div asp-validation-summary="All"></div>
+</form>
