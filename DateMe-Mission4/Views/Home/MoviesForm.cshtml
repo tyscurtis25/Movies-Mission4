@@ -7,9 +7,9 @@
 <h1>Movies Form</h1>
 
 <form method="post" class="form-group" onsubmit="Calculate()">
-    <label class="col-form-label" asp-for="MovieID">MovieID:</label>
-    <input id="movieid" asp-for="MovieID">
-    <br>
+    @*<label class="col-form-label" asp-for="MovieID">MovieID:</label>
+        <input id="movieid" asp-for="MovieID">
+        <br>*@
 
     <label class="col-form-label" asp-for="Category">Category:</label>
     <input id="category" asp-for="Category">
@@ -21,6 +21,10 @@
 
     <label class="col-form-label" asp-for="Year">Year:</label>
     <input id="year" asp-for="Year">
+    <br>
+
+    <label class="col-form-label" asp-for="Director">Director:</label>
+    <input id="director" asp-for="Director">
     <br>
 
     <label class="col-form-label" asp-for="Rating">Rating:</label>

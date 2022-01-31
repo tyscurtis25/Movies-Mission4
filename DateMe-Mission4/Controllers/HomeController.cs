@@ -12,10 +12,13 @@ namespace DateMe_Mission4.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private MoviesInfoContext moviesInfoContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger)
+        //constructor
+        public HomeController(ILogger<HomeController> logger, MoviesInfoContext moviesVar)
         {
             _logger = logger;
+            moviesInfoContext = moviesVar;
         }
 
         public IActionResult Index()
@@ -35,9 +38,12 @@ namespace DateMe_Mission4.Controllers
         }
 
         [HttpPost]
-        public IActionResult MoviesForm(Movies response)
+        public IActionResult MoviesForm(Movies re)
         {
-            return View("ConfirmationPage", response);
+            moviesInfoContext.Add(re);
+            moviesInfoContext.SaveChanges();
+
+            return View("ConfirmationPage", re);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
