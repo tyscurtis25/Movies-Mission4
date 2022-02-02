@@ -1,5 +1,6 @@
 ﻿using DateMe_Mission4.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,11 @@ namespace DateMe_Mission4.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private MoviesInfoContext moviesInfoContext { get; set; }
 
         //constructor
-        public HomeController(ILogger<HomeController> logger, MoviesInfoContext moviesVar)
+        public HomeController(MoviesInfoContext moviesVar)
         {
-            _logger = logger;
             moviesInfoContext = moviesVar;
         }
 
@@ -34,22 +33,84 @@ namespace DateMe_Mission4.Controllers
         [HttpGet]
         public IActionResult MoviesForm()
         {
+            ViewBag.Categories = moviesInfoContext.Categories.ToList();
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult MoviesForm(Movies re)
+        public IActionResult MoviesForm(Movies mov)
         {
-            moviesInfoContext.Add(re);
+            if (ModelState.IsValid) //validation for form
+            {
+                moviesInfoContext.Add(mov);
+                moviesInfoContext.SaveChanges();
+
+                return View("ConfirmationPage", mov);
+            }
+            else //if invalid
+            {
+                ViewBag.Categories = moviesInfoContext.Categories.ToList();
+                return View(mov);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult MoviesCollection()
+        {
+            var collections = moviesInfoContext.Responses
+                .Include(x => x.Category)
+                //.Where(x => x.Edited == false)
+                .OrderBy(x => x.Title)
+                .ToList();
+
+            return View(collections);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int movieid)
+        {
+            ViewBag.Categories = moviesInfoContext.Categories.ToList();
+
+            var entry = moviesInfoContext.Responses
+                .Single(x => x.MovieID == movieid);
+
+            return View("MoviesForm", entry);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Movies instance) //instance is just an instance of Movies on the form
+        {
+            if (ModelState.IsValid)
+            {
+                moviesInfoContext.Update(instance);
+                moviesInfoContext.SaveChanges();
+
+                return RedirectToAction("MoviesCollection");
+            }
+            else //if invalid
+            {
+                ViewBag.Categories = moviesInfoContext.Categories.ToList();
+                return View(instance);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int movieid)
+        {
+            var entry = moviesInfoContext.Responses.Single(x => x.MovieID == movieid);
+
+            return View(entry);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Movies movie)
+        {
+            moviesInfoContext.Remove(movie);
             moviesInfoContext.SaveChanges();
 
-            return View("ConfirmationPage", re);
+            return RedirectToAction("MoviesCollection");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

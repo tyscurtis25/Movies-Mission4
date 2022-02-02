@@ -15,15 +15,50 @@ namespace DateMe_Mission4.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.22");
 
+            modelBuilder.Entity("DateMe_Mission4.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Comedy"
+                        });
+                });
+
             modelBuilder.Entity("DateMe_Mission4.Models.Movies", b =>
                 {
                     b.Property<int>("MovieID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -52,7 +87,56 @@ namespace DateMe_Mission4.Migrations
 
                     b.HasKey("MovieID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("Responses");
+
+                    b.HasData(
+                        new
+                        {
+                            MovieID = 1,
+                            CategoryID = 1,
+                            Director = "Christopher Nolan",
+                            Edited = false,
+                            Lent_to = "yeah",
+                            Notes = 10,
+                            Rating = "PG-13",
+                            Title = "The Dark Knight",
+                            Year = 2008
+                        },
+                        new
+                        {
+                            MovieID = 2,
+                            CategoryID = 1,
+                            Director = "Sam Raimi",
+                            Edited = false,
+                            Lent_to = "yeah",
+                            Notes = 10,
+                            Rating = "PG-13",
+                            Title = "Spider-Man 2",
+                            Year = 2004
+                        },
+                        new
+                        {
+                            MovieID = 5,
+                            CategoryID = 2,
+                            Director = "Brad Bird",
+                            Edited = false,
+                            Lent_to = "yeah",
+                            Notes = 10,
+                            Rating = "PG",
+                            Title = "The Incredibles",
+                            Year = 2004
+                        });
+                });
+
+            modelBuilder.Entity("DateMe_Mission4.Models.Movies", b =>
+                {
+                    b.HasOne("DateMe_Mission4.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

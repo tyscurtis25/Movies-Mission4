@@ -13,9 +13,6 @@ namespace DateMe_Mission4.Models
         public int MovieID { get; set; }
 
         [Required]
-        public string Category { get; set; }
-
-        [Required]
         public string Title { get; set; }
 
         [Required]
@@ -32,6 +29,10 @@ namespace DateMe_Mission4.Models
 
         [StringLength(25, ErrorMessage ="Notes are limited to 25 characters.")]
         public int Notes { get; set; }
+
+        // build foreign key relationship
+        public int CategoryID { get; set; } // Foreign Key
+        public Category Category { get; set; }
 
     }
 }

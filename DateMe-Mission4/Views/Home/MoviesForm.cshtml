@@ -6,13 +6,21 @@
 
 <h1>Movies Form</h1>
 
-<form method="post" class="form-group" onsubmit="Calculate()">
+<form method="post" class="form-group">
     @*<label class="col-form-label" asp-for="MovieID">MovieID:</label>
         <input id="movieid" asp-for="MovieID">
         <br>*@
 
-    <label class="col-form-label" asp-for="Category">Category:</label>
-    <input id="category" asp-for="Category">
+    <div asp-validation-summary="All"></div> @* shows validation summary/lets you know  *@
+
+    <label class="col-form-label" asp-for="CategoryID">Category:</label>
+    <select id="category" asp-for="CategoryID">
+        <option value="">Select a category</option>
+        @foreach (Category cat in ViewBag.Categories)
+        {
+            <option value="@cat.CategoryID">@cat.CategoryName</option>
+        }
+    </select>
     <br>
 
     <label class="col-form-label" asp-for="Title">Title:</label>
