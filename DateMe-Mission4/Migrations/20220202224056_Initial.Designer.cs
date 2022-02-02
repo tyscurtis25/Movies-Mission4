@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DateMe_Mission4.Migrations
 {
     [DbContext(typeof(MoviesInfoContext))]
-    [Migration("20220202124159_Initial")]
+    [Migration("20220202224056_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

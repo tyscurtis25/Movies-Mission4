@@ -38,7 +38,7 @@ namespace DateMe_Mission4.Models
                     Rating = "PG-13",
                     Edited = false,
                     Lent_to = "yeah",
-                    Notes = 10,
+                    Notes = "10/10",
                     CategoryID = 1
 
                 },
@@ -52,7 +52,7 @@ namespace DateMe_Mission4.Models
                     Rating = "PG-13",
                     Edited = false,
                     Lent_to = "yeah",
-                    Notes = 10,
+                    Notes = "10/10",
                     CategoryID = 1
                 },
 
@@ -65,7 +65,7 @@ namespace DateMe_Mission4.Models
                     Rating = "PG",
                     Edited = false,
                     Lent_to = "yeah",
-                    Notes = 10,
+                    Notes = "10/10",
                     CategoryID = 2
                 }
             );

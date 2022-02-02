@@ -28,7 +28,7 @@ namespace DateMe_Mission4.Models
         public string Lent_to { get; set; }
 
         [StringLength(25, ErrorMessage ="Notes are limited to 25 characters.")]
-        public int Notes { get; set; }
+        public string Notes { get; set; }
 
         // build foreign key relationship
         public int CategoryID { get; set; } // Foreign Key
